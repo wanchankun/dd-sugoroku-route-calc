@@ -47,6 +47,11 @@ export default function App() {
         for (let c = 0; c < cols; c++) {
           const x = startX + (c * cellW) + (cellW / 2);
           const y = startY + (r * cellH) + (cellH / 2);
+
+          // デバッグ用：スキャンした場所に小さな点を描画して確認
+          ctx.fillStyle = 'red';
+          ctx.fillRect(x - 2, y - 2, 4, 4);
+
           const [red, green, blue] = ctx.getImageData(x, y, 1, 1).data;
 
           let type = 'green';
@@ -128,7 +133,7 @@ export default function App() {
 
         <input id="file-input" type="file" hidden accept="image/*" onChange={(e) => handleUpload(e.target.files?.[0] || null)} />
 
-        // <canvas ref={canvasRef} style={{ display: 'none' }} />
+        {/* <canvas ref={canvasRef} style={{ display: 'none' }} /> */}
 
         {grid.length > 0 && (
           <Stack w="100%" gap="xs">
