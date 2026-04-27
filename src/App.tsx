@@ -26,7 +26,15 @@ export default function App() {
     img.src = URL.createObjectURL(file);
     img.onload = () => {
       const canvas = canvasRef.current!;
+      if (!canvas) {
+        console.error("Canvas element not found");
+        return;
+      }
       const ctx = canvas.getContext('2d', { willReadFrequently: true })!;
+      if (!ctx) {
+        console.error("Failed to get 2D context");
+        return;
+      }
       canvas.width = img.width;
       canvas.height = img.height;
       ctx.drawImage(img, 0, 0);
