@@ -5,6 +5,15 @@ export default function App() {
   const [grid, setGrid] = useState<string[][]>([]);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
+  const SCORE_MAP: Record<string, number> = {
+    red: 50,
+    purple: 20,
+    green: 10,
+    unknown: 0
+  };
+
+  type Point = { x: number; y: number };
+
   const handleUpload = (file: File | null) => {
     if (!file) return;
     const img = new Image();
@@ -47,6 +56,44 @@ export default function App() {
       }
       setGrid(newGrid);
     };
+  };
+
+  const findBestPath = (grid: string[][], start: Point, maxSteps: number) => {
+    let maxScore = -1;
+    let bestPath: Point[] = [];
+
+    const solve = (current: Point, stepsLeft: number, currentScore: number, visited: Set<string>, path: Point[]) => {
+      // 15歩に達したら終了
+      if (stepsLeft === 0) {
+        if (currentScore > maxScore) {
+          maxScore = currentScore;
+          bestPath = [...path];
+        }
+        return;
+      }
+
+      // 上下左右の4方向をチェック
+      const directions = [{x:0,y:1}, {x:0,y:-1}, {x:1,y:0}, {x:-1,y:0}];
+      
+      for (const d of directions) {
+        const next = { x: current.x + d.x, y: current.y + d.y };
+        
+        // グリッド範囲内かチェック
+        if (next.x >= 0 && next.x < 7 && next.y >= 0 && next.y < 9) {
+          const key = `${next.x},${next.y}`;
+          const isFirstVisit = !visited.has(key);
+          const cellScore = isFirstVisit ? SCORE_MAP[grid[next.y][next.x]] : 0;
+
+          visited.add(key);
+          solve(next, stepsLeft - 1, currentScore + cellScore, visited, [...path, next]);
+          visited.delete(key); // バックトラッキング
+        }
+      }
+    };
+
+    const initialVisited = new Set<string>([`${start.x},${start.y}`]);
+    solve(start, maxSteps, 0, initialVisited, [start]);
+    return { maxScore, bestPath };
   };
 
   return (
