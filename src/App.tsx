@@ -164,7 +164,7 @@ export default function App() {
                 }))}
               </SimpleGrid>
             </Paper>
-            <Text size="xs" c="dimmed" textAlign="center">
+            <Text size="xs" c="dimmed">
               ※数字は移動順序を表します。0がスタート地点です。
             </Text>
           </Stack>
