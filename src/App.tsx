@@ -42,10 +42,10 @@ export default function App() {
       const rows = 9;
       const cols = 7;
       // 座標は標準的なスクショ比率に基づき調整
-      const startX = img.width * 0.16; 
-      const startY = img.height * 0.32;
-      const cellW = (img.width * 0.72) / cols;
-      const cellH = (img.height * 0.48) / rows;
+      const startX = img.width * 0.13; 
+      const startY = img.height * 0.30;
+      const cellW = (img.width * 0.76) / cols;
+      const cellH = (img.height * 0.50) / rows;
 
       let detectedChar: Point = { x: 3, y: 5 }; // デフォルト
       const newGrid: string[][] = [];
