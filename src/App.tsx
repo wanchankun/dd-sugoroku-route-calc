@@ -141,7 +141,7 @@ export default function App() {
 
         <input id="file-input" type="file" hidden accept="image/*" onChange={(e) => handleUpload(e.target.files?.[0] || null)} />
 
-        {/* <canvas ref={canvasRef} style={{ display: 'none' }} /> */}
+        <canvas ref={canvasRef} style={{ display: 'none' }} />
 
         {grid.length > 0 && (
           <Stack w="100%" gap="xs">
